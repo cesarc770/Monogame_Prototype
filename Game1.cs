@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using Rapid_Prototype_1.Tools;
 
 namespace Rapid_Prototype_1
 {
@@ -11,6 +14,12 @@ namespace Rapid_Prototype_1
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        const float TEMP_BPM = 130;
+
+        Rhythm rhythm = new Rhythm(TEMP_BPM);
+        Song song;
+        private bool started = false;
         
         public Game1()
         {
@@ -39,8 +48,7 @@ namespace Rapid_Prototype_1
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            song = Content.Load<Song>("tempLoop");
         }
 
         /// <summary>
@@ -62,8 +70,13 @@ namespace Rapid_Prototype_1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-
+            if (!started) {
+                started = true;
+                rhythm.Start(gameTime);
+                MediaPlayer.Play(song);
+                MediaPlayer.IsRepeating = true;
+            }
+            rhythm.Update(gameTime);
             base.Update(gameTime);
         }
 
