@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-Game1",
+      "appliesTo": "Game1.cs",
+      "type": "launch"
+    }
+  ]
+}

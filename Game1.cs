@@ -15,6 +15,10 @@ namespace Rapid_Prototype_1
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Texture2D background_Sprite;
+
+        MouseState mouseState;
+
         const float TEMP_BPM = 130;
 
         Rhythm rhythm = new Rhythm(TEMP_BPM);
@@ -25,6 +29,11 @@ namespace Rapid_Prototype_1
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+
+            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -49,6 +58,7 @@ namespace Rapid_Prototype_1
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             song = Content.Load<Song>("tempLoop");
+            background_Sprite = Content.Load<Texture2D>("background");
         }
 
         /// <summary>
@@ -78,6 +88,8 @@ namespace Rapid_Prototype_1
             }
             rhythm.Update(gameTime);
             base.Update(gameTime);
+
+            mouseState = Mouse.GetState();
         }
 
         /// <summary>
@@ -88,7 +100,10 @@ namespace Rapid_Prototype_1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(background_Sprite, GraphicsDevice.Viewport.Bounds, Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
