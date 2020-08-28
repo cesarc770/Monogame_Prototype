@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Rapid_Prototype_1.Tools;
+using System.Globalization;
 
 namespace Rapid_Prototype_1
 {
@@ -12,8 +13,19 @@ namespace Rapid_Prototype_1
     /// </summary>
     public class Game1 : Game
     {
+        const int WINDOW_WIDTH = 1920;
+        const int WINDOW_HEIGHT = 1080;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        Texture2D background_Sprite;
+
+        MouseState mouseState;
+
+        //shapes temporary
+        GameController gameController = new GameController();
+
+        //**************//
 
         const float TEMP_BPM = 130;
 
@@ -25,6 +37,13 @@ namespace Rapid_Prototype_1
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+           // if we wanted to set a window size
+           graphics.PreferredBackBufferWidth = WINDOW_WIDTH;
+           graphics.PreferredBackBufferHeight = WINDOW_HEIGHT;
+
+            IsMouseVisible = true;
+            Window.AllowUserResizing = false;          
         }
 
         /// <summary>
@@ -49,6 +68,12 @@ namespace Rapid_Prototype_1
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             song = Content.Load<Song>("tempLoop");
+            background_Sprite = Content.Load<Texture2D>("background");
+         
+            foreach (Shape shape in gameController.allFallingShapes)
+            {
+                shape.setSprite(Content.Load<Texture2D>(shape.getSpriteName()));
+            }
         }
 
         /// <summary>
@@ -78,6 +103,15 @@ namespace Rapid_Prototype_1
             }
             rhythm.Update(gameTime);
             base.Update(gameTime);
+
+            mouseState = Mouse.GetState();
+            gameController.ControllerUpate(gameTime);
+
+            foreach (Shape shape in gameController.fallingShapes)
+            {
+                shape.ShapeUpdate(gameTime);
+            }
+
         }
 
         /// <summary>
@@ -88,7 +122,18 @@ namespace Rapid_Prototype_1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(background_Sprite, GraphicsDevice.Viewport.Bounds, Color.White);
+
+            foreach (Shape shape in gameController.fallingShapes)
+            {
+                Vector2 shapePos = shape.GetPosition();
+                int centerDist = shape.GetCenter();
+                spriteBatch.Draw(shape.getSprite(), new Vector2(shapePos.X - centerDist, shapePos.Y - centerDist) , Color.White);
+            }
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
