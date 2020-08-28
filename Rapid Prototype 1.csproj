@@ -47,6 +47,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shape.cs" />
+    <Compile Include="Tools\BoardPieceClicker.cs" />
+    <Compile Include="Tools\GameBoard.cs" />
     <Compile Include="Tools\Rhythm.cs" />
   </ItemGroup>
   <ItemGroup>
