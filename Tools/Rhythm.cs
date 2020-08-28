@@ -26,19 +26,15 @@ namespace Rapid_Prototype_1.Tools {
             timeSinceBeat = 0;
         }
 
-        public void Update(GameTime gameTime) {
+        public void Update(GameTime gameTime, Action onBeat) {
             timeSinceBeat += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             double timeTillNextBeat = beatLength - timeSinceBeat;
 
             if (timeSinceBeat + FRAME_TIME / 2 > beatLength) {
                 timeSinceBeat -= beatLength;
-
-                Console.WriteLine("\nBEAT {0}, {1}", beatCount, timeSinceBeat);
+                onBeat();
                 ++beatCount;
-            }
-            else {
-                Console.Write('-');
             }
 
             //Console.WriteLine("{0} -> now -> {1}", timeSinceBeat, timeTillNextBeat);
