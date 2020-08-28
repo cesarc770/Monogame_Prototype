@@ -72,8 +72,8 @@ namespace Rapid_Prototype_1
 
             if (!started) {
                 started = true;
-                rhythm.Start(gameTime);
-                MediaPlayer.Play(song);
+                rhythm.Start();
+                //MediaPlayer.Play(song);
                 MediaPlayer.IsRepeating = true;
             }
             rhythm.Update(gameTime);
