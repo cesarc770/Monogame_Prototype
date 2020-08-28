@@ -58,12 +58,12 @@ namespace Rapid_Prototype_1.Tools
                 namePrefixes.Add("Unicorn_back_left_leg_");
                 namePrefixes.Add("Unicorn_back_neck_");
                 namePrefixes.Add("Unicorn_back_right_leg_");
-                namePrefixes.Add("unicorn_body_");
-                namePrefixes.Add("unicorn_chest_");
-                namePrefixes.Add("unicorn_front_legs_");
-                namePrefixes.Add("unicorn_front_neck_");
-                namePrefixes.Add("unicorn_horn_");
-                namePrefixes.Add("unicorn_nose_");
+                namePrefixes.Add("Unicorn_body_");
+                namePrefixes.Add("Unicorn_chest_");
+                namePrefixes.Add("Unicorn_front_legs_");
+                namePrefixes.Add("Unicorn_front_neck_");
+                namePrefixes.Add("Unicorn_horn_");
+                namePrefixes.Add("Unicorn_nose_");
                 namePrefixes.Add("Unicorn_tail_");
 
                 for (int i = 0; i < namePrefixes.Count; i++)
