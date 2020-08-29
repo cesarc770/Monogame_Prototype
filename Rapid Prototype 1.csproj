@@ -42,6 +42,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Button.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="FallingShapes.cs" />
     <Compile Include="Program.cs" />
@@ -109,7 +110,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.manifest" />
-    <None Include="Content\background.xnb" />
+    <None Include="Content\1080 ui no start.xnb" />
+    <None Include="Content\start.xnb" />
     <None Include="Content\tempLoop.xnb" />
     <None Include="Content\Unicorn_back_left_leg_sat.xnb" />
   </ItemGroup>
