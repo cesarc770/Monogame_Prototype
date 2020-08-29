@@ -97,6 +97,7 @@ namespace Rapid_Prototype_1
             // TODO: Unload any non ContentManager content here
         }
 
+        private bool showBackground = true;
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -109,11 +110,11 @@ namespace Rapid_Prototype_1
 
             if (!started) {
                 started = true;
-                rhythm.Start(gameTime);
+                rhythm.Start();
                 MediaPlayer.Play(song);
                 MediaPlayer.IsRepeating = true;
             }
-            rhythm.Update(gameTime);
+            rhythm.Update(gameTime, () => showBackground = false);
             base.Update(gameTime);
 
             mouseState = Mouse.GetState();
@@ -145,7 +146,13 @@ namespace Rapid_Prototype_1
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(background_Sprite, GraphicsDevice.Viewport.Bounds, Color.White);
+            if (showBackground) {
+                spriteBatch.Draw(background_Sprite, GraphicsDevice.Viewport.Bounds, Color.White);
+            }
+            else {
+                spriteBatch.Draw(background_Sprite, GraphicsDevice.Viewport.Bounds, Color.White * 0.95f);
+                showBackground = true;
+            }
 
             foreach (Shape shape in gameController.fallingShapes)
             {
