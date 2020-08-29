@@ -24,7 +24,7 @@ namespace Rapid_Prototype_1
         MouseState lastMouseState;
 
         //shapes temporary
-        GameController gameController = new GameController();
+        FallingShapes fallingShapes;
 
         //**************//
 
@@ -79,11 +79,8 @@ namespace Rapid_Prototype_1
             spriteBatch = new SpriteBatch(GraphicsDevice);
             song = Content.Load<Song>("tempLoop");
             background_Sprite = Content.Load<Texture2D>("background");
-         
-            foreach (Shape shape in gameController.allFallingShapes)
-            {
-                shape.setSprite(Content.Load<Texture2D>(shape.getSpriteName()));
-            }
+
+            fallingShapes = new FallingShapes(Content, TEMP_BPM);
 
             gameBoard.LoadContent(Content);
         }
@@ -114,16 +111,17 @@ namespace Rapid_Prototype_1
                 MediaPlayer.Play(song);
                 MediaPlayer.IsRepeating = true;
             }
-            rhythm.Update(gameTime, () => showBackground = false);
+            rhythm.Update(gameTime, () => {
+                fallingShapes.SpawnPiece();
+                showBackground = false;
+            });
+
             base.Update(gameTime);
 
-            mouseState = Mouse.GetState();
-            gameController.ControllerUpate(gameTime);
+            fallingShapes.Update(gameTime);
 
-            foreach (Shape shape in gameController.fallingShapes)
-            {
-                shape.ShapeUpdate(gameTime);
-            }
+            mouseState = Mouse.GetState();
+            
 
             if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton != ButtonState.Pressed)
             {
@@ -154,12 +152,7 @@ namespace Rapid_Prototype_1
                 showBackground = true;
             }
 
-            foreach (Shape shape in gameController.fallingShapes)
-            {
-                Vector2 shapePos = shape.GetPosition();
-                int centerDist = shape.GetCenter();
-                spriteBatch.Draw(shape.getSprite(), new Vector2(shapePos.X - centerDist, shapePos.Y - centerDist) , Color.White);
-            }
+            fallingShapes.Draw(spriteBatch);
 
             spriteBatch.End();
 
