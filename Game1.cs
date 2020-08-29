@@ -21,6 +21,7 @@ namespace Rapid_Prototype_1
         Texture2D background_Sprite;
 
         MouseState mouseState;
+        MouseState lastMouseState;
 
         //shapes temporary
         GameController gameController = new GameController();
@@ -32,7 +33,11 @@ namespace Rapid_Prototype_1
         Rhythm rhythm = new Rhythm(TEMP_BPM);
         Song song;
         private bool started = false;
-        
+
+        string nameOfPieceInBeatBar = ""; // TODO: This needs to be the name of the asset used to create the piece that is hitting the bar
+                                          // TODO: For instance, "Unicorn_back_left_leg_sat"
+        GameBoard gameBoard;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -56,6 +61,11 @@ namespace Rapid_Prototype_1
         {
             // TODO: Add your initialization logic here
 
+            gameBoard = new GameBoard(GameBoard.BoardName.Unicorn);
+            gameBoard.Initialize();
+
+            lastMouseState = Mouse.GetState();
+
             base.Initialize();
         }
 
@@ -74,6 +84,8 @@ namespace Rapid_Prototype_1
             {
                 shape.setSprite(Content.Load<Texture2D>(shape.getSpriteName()));
             }
+
+            gameBoard.LoadContent(Content);
         }
 
         /// <summary>
@@ -112,6 +124,15 @@ namespace Rapid_Prototype_1
                 shape.ShapeUpdate(gameTime);
             }
 
+            if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton != ButtonState.Pressed)
+            {
+                nameOfPieceInBeatBar = "Unicorn_back_left_leg_sat"; // TODO: This needs to be set somewhere to be the name of the piece in the bar.
+
+                gameBoard.SaturateIfNamePrefixMatch(mouseState.X, mouseState.Y, nameOfPieceInBeatBar);
+            }
+
+            lastMouseState = mouseState;
+
         }
 
         /// <summary>
@@ -134,6 +155,8 @@ namespace Rapid_Prototype_1
             }
 
             spriteBatch.End();
+
+            gameBoard.Draw(spriteBatch);
 
             base.Draw(gameTime);
         }
