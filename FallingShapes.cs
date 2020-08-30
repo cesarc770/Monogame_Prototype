@@ -15,9 +15,9 @@ namespace Rapid_Prototype_1
     class FallingShapes
     {
         private List<Shape> fallingShapes = new List<Shape>();
-        private Queue<Shape> allFallingShapes = new Queue<Shape>();
+        private List<Shape> allFallingShapes = new List<Shape>();
 
-        private List<Shape> shapesInBeatBar = new List<Shape>(); // This will almost always havev 0 or 1 entries, more if we add more lanes
+        private List<Shape> shapesInBeatBar = new List<Shape>(); // This will almost always have 0 or 1 entries, more if we add more lanes
 
         const int SCREEN_HEIGHT = 1080;
         const int FALL_LENGTH = 816;
@@ -29,22 +29,23 @@ namespace Rapid_Prototype_1
 
             float fallSpeed = (FALL_LENGTH * bpm * MINUTES_PER_SECOND) / PIECES_ON_SCREEN;
             // Add one of each piece
-            allFallingShapes.Enqueue(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_back_left_leg_sat", content));
-            allFallingShapes.Enqueue(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_back_neck_sat", content));
-            allFallingShapes.Enqueue(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_back_right_leg_sat", content));
-            allFallingShapes.Enqueue(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_body_sat", content));
-            allFallingShapes.Enqueue(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_chest_sat", content));
-            allFallingShapes.Enqueue(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_front_legs_sat", content));
-            allFallingShapes.Enqueue(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_front_neck_sat", content));
-            allFallingShapes.Enqueue(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_horn_sat", content));
-            allFallingShapes.Enqueue(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_nose_sat", content));
-            allFallingShapes.Enqueue(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_tail_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_back_left_leg_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_back_neck_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_back_right_leg_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_body_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_chest_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_front_legs_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_front_neck_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_horn_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_nose_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_tail_sat", content));
         }
 
 
         public void SpawnPiece() {
             if (allFallingShapes.Count != 0) {
-                fallingShapes.Add(allFallingShapes.Dequeue());
+                fallingShapes.Add(allFallingShapes[0]);
+                allFallingShapes.RemoveAt(0); 
             }
         }
 
@@ -83,7 +84,7 @@ namespace Rapid_Prototype_1
                 fallingShapes.Remove(shape);
                 // Comment these to stop the pieces from wrapping
                 shape.ResetPosition();
-                allFallingShapes.Enqueue(shape); 
+                allFallingShapes.Add(shape); 
             }
             shapesToWrap.Clear();
         }
@@ -97,6 +98,12 @@ namespace Rapid_Prototype_1
         public List<Shape> GetShapesInBeatBar()
         {
             return shapesInBeatBar;
+        }
+
+        public void RemoveShape(Shape shape)
+        {
+            allFallingShapes.RemoveAll(item => shape.GetName() == item.GetName());
+            fallingShapes.RemoveAll(item => shape.GetName() == item.GetName());
         }
     }
 }

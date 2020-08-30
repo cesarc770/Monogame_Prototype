@@ -136,6 +136,7 @@ namespace Rapid_Prototype_1
                     {
                         // TODO: Remove this piece from the list of pieces that can fall
                         aPieceWasPlaced = true;
+                        fallingShapes.RemoveShape(shape);
                     }
                 }
 
