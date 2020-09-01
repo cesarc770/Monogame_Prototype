@@ -149,8 +149,11 @@ namespace Rapid_Prototype_1.Tools
         /// <param name="globalMouseX">The global X position of the mouse.</param>
         /// <param name="globalMouseY">The global Y position of the mouse.</param>
         /// <param name="name">The asset name used to initialize the piece inside the beat bar.</param>
-        public void SaturateIfNamePrefixMatch(int globalMouseX, int globalMouseY, string name)
+        /// <returns>True if a piece was placed, false if no piece was placed</returns>
+        public bool SaturateIfNamePrefixMatch(int globalMouseX, int globalMouseY, string name)
         {
+            bool pieceWasPlaced = false;
+
             // There shouldn't be any overlapping pieces, but let's account for that anyway
             List<int> indexes = pieceClickChecker.GetIndexesOfPiecesClicked(globalMouseX, globalMouseY);
 
@@ -159,8 +162,11 @@ namespace Rapid_Prototype_1.Tools
                 if (name.StartsWith(namePrefixes[index]))
                 {
                     texturesSaturated[index] = true;
+                    pieceWasPlaced = true;
                 }
             }
+
+            return pieceWasPlaced;
         }
 
     }

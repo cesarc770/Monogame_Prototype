@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Rapid_Prototype_1.Tools;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace Rapid_Prototype_1
 {
@@ -37,8 +38,9 @@ namespace Rapid_Prototype_1
         private bool started = false;
         private bool gameStarted = false;
 
-        string nameOfPieceInBeatBar = ""; // TODO: This needs to be the name of the asset used to create the piece that is hitting the bar
-                                          // TODO: For instance, "Unicorn_back_left_leg_sat"
+        // TODO: This needs to be the names of the assets used to create the pieces that are in the beat bar
+        // TODO: For instance, "Unicorn_back_left_leg_sat"
+        List<string> namesOfPiecesInBeatBar = new List<string>(); 
         GameBoard gameBoard;
 
         public Game1()
@@ -147,9 +149,23 @@ namespace Rapid_Prototype_1
 
             if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton != ButtonState.Pressed && gameStarted)
             {
-                nameOfPieceInBeatBar = "Unicorn_back_left_leg_sat"; // TODO: This needs to be set somewhere to be the name of the piece in the bar.
+                bool aPieceWasPlaced = false;
+                List<Shape> shapesInBeatBar = fallingShapes.GetShapesInBeatBar();
+                foreach(Shape shape in shapesInBeatBar)
+                {
+                    // If this piece was placed
+                    if (gameBoard.SaturateIfNamePrefixMatch(mouseState.X, mouseState.Y, shape.GetName()))
+                    {
+                        // TODO: Remove this piece from the list of pieces that can fall
+                        aPieceWasPlaced = true;
+                        fallingShapes.RemoveShape(shape);
+                    }
+                }
 
-                gameBoard.SaturateIfNamePrefixMatch(mouseState.X, mouseState.Y, nameOfPieceInBeatBar);
+                if(!aPieceWasPlaced)
+                {
+                    //TODO: Deduct points for a missed click
+                }
             }
 
             lastMouseState = mouseState;
