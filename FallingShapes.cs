@@ -22,34 +22,58 @@ namespace Rapid_Prototype_1
         const int SCREEN_HEIGHT = 1080;
         const int FALL_LENGTH = 816;
         const int BEAT_BAR_SIZE = 114;
-        const float MINUTES_PER_SECOND = 1 / 60f;
-        const int PIECES_ON_SCREEN = 4;
+        const int MIN_SPEED = 300;
+        const int MAX_SPEED = 500;
+        const int MIN_X = 100;
+        const int MAX_X = 1920 - 100;
 
-        public FallingShapes(ContentManager content, float bpm) {
+        const double MIN_SPAWN_INTERVAL = 500f;
+        const double MAX_SPAWN_INTERVAL = 1000f;
+        double nextSpawnTime;
 
-            float fallSpeed = (FALL_LENGTH * bpm * MINUTES_PER_SECOND) / PIECES_ON_SCREEN;
+        Random random = new Random();
+
+        public FallingShapes(ContentManager content) {
+
             // Add one of each piece
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_back_left_leg_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_back_neck_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_back_right_leg_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_body_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_chest_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_front_legs_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_front_neck_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_horn_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_nose_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_tail_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_back_left_leg_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_back_neck_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_back_right_leg_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_body_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_chest_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_front_legs_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_front_neck_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_horn_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_nose_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_tail_sat", content));
+        }
+
+        private float RandomFallSpeed() {
+            return random.Next(MIN_SPEED, MAX_SPEED) + (float)random.NextDouble();
+        }
+
+        private int RandomXPos() {
+            return random.Next(MIN_X, MAX_X);
         }
 
 
-        public void SpawnPiece() {
+
+        private void SpawnPiece() {
             if (allFallingShapes.Count != 0) {
                 fallingShapes.Add(allFallingShapes[0]);
                 allFallingShapes.RemoveAt(0); 
             }
         }
 
+        private double GetNextSpawnOffset() {
+            return random.NextDouble() * (MAX_SPAWN_INTERVAL - MIN_SPAWN_INTERVAL) + MAX_SPAWN_INTERVAL;
+        }
+
         public void Update(GameTime gameTime) {
+            if (gameTime.TotalGameTime.TotalMilliseconds > nextSpawnTime) {
+                SpawnPiece();
+                nextSpawnTime = gameTime.TotalGameTime.TotalMilliseconds + GetNextSpawnOffset();
+            }
             List<Shape> shapesToWrap = new List<Shape>();
             foreach (Shape shape in fallingShapes) {
                 shape.Update(gameTime);

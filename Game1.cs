@@ -31,11 +31,6 @@ namespace Rapid_Prototype_1
 
         //**************//
 
-        const float TEMP_BPM = 130;
-
-        Rhythm rhythm = new Rhythm(TEMP_BPM);
-        Song song;
-        private bool started = false;
         private bool gameStarted = false;
 
         // TODO: This needs to be the names of the assets used to create the pieces that are in the beat bar
@@ -82,7 +77,6 @@ namespace Rapid_Prototype_1
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            song = Content.Load<Song>("tempLoop");
             background_Sprite = Content.Load<Texture2D>("1080 ui no start");
 
             startButton = new Button("start", Content)
@@ -92,7 +86,7 @@ namespace Rapid_Prototype_1
 
             startButton.Click += StartButton_Click;
 
-            fallingShapes = new FallingShapes(Content, TEMP_BPM);
+            fallingShapes = new FallingShapes(Content);
 
             gameBoard.LoadContent(Content);
         }
@@ -124,21 +118,12 @@ namespace Rapid_Prototype_1
 
             startButton.Update(gameTime);
 
-            if (!started) {
-                started = true;
-                rhythm.Start();
-                MediaPlayer.Play(song);
-                MediaPlayer.IsRepeating = true;
-            }
+          
 
             //we can change this but for now the pieces start falling only after start button clicked
             if (gameStarted)
             {
                 fallingShapes.Update(gameTime);
-                rhythm.Update(gameTime, () => {
-                    fallingShapes.SpawnPiece();
-                    showBackground = false;
-                });
             }
      
 
@@ -190,15 +175,18 @@ namespace Rapid_Prototype_1
                 showBackground = true;
             }
 
-            if (started)
-                fallingShapes.Draw(spriteBatch);
 
-            if(!gameStarted)
+            gameBoard.Draw(spriteBatch);
+
+            if (gameStarted)
+                fallingShapes.Draw(spriteBatch);
+            else
                 startButton.Draw(spriteBatch);
 
             spriteBatch.End();
 
-            gameBoard.Draw(spriteBatch);
+
+
 
             base.Draw(gameTime);
         }
