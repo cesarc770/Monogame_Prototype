@@ -126,7 +126,6 @@ namespace Rapid_Prototype_1.Tools
         /// <param name="spriteBatch">Game1's spriteBatch variable.</param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
 
             for (int i = 0; i < unsatTextures.Count; i++)
             {
@@ -140,7 +139,6 @@ namespace Rapid_Prototype_1.Tools
                 }
             }
 
-            spriteBatch.End();
         }
 
         /// <summary>

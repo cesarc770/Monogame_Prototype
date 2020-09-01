@@ -22,9 +22,9 @@ namespace Rapid_Prototype_1
 
         private Vector2 initialPosition;
 
-        public Shape(Vector2 pos, float speed, string spriteName, ContentManager content) { 
-            position = pos;
-            initialPosition = pos;
+        public Shape(float x, float speed, string spriteName, ContentManager content) { 
+            position = new Vector2(x, 0);
+            initialPosition = new Vector2(x, 0);
             this.speed = speed;
 
             sprite = content.Load<Texture2D>(spriteName);
