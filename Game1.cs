@@ -23,6 +23,8 @@ namespace Rapid_Prototype_1
         MouseState mouseState;
         MouseState lastMouseState;
 
+        Button startButton;
+
         //shapes temporary
         FallingShapes fallingShapes;
 
@@ -33,6 +35,7 @@ namespace Rapid_Prototype_1
         Rhythm rhythm = new Rhythm(TEMP_BPM);
         Song song;
         private bool started = false;
+        private bool gameStarted = false;
 
         string nameOfPieceInBeatBar = ""; // TODO: This needs to be the name of the asset used to create the piece that is hitting the bar
                                           // TODO: For instance, "Unicorn_back_left_leg_sat"
@@ -78,7 +81,14 @@ namespace Rapid_Prototype_1
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             song = Content.Load<Song>("tempLoop");
-            background_Sprite = Content.Load<Texture2D>("background");
+            background_Sprite = Content.Load<Texture2D>("1080 ui no start");
+
+            startButton = new Button("start", Content)
+            {
+                Position = new Vector2(WINDOW_WIDTH - 300 , WINDOW_HEIGHT - 80),
+            };
+
+            startButton.Click += StartButton_Click;
 
             fallingShapes = new FallingShapes(Content, TEMP_BPM);
 
@@ -94,6 +104,11 @@ namespace Rapid_Prototype_1
             // TODO: Unload any non ContentManager content here
         }
 
+        private void StartButton_Click(object sender, System.EventArgs e)
+        {
+            gameStarted = true;
+        }
+
         private bool showBackground = true;
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -105,25 +120,32 @@ namespace Rapid_Prototype_1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            startButton.Update(gameTime);
+
             if (!started) {
                 started = true;
                 rhythm.Start();
                 MediaPlayer.Play(song);
                 MediaPlayer.IsRepeating = true;
             }
-            rhythm.Update(gameTime, () => {
-                fallingShapes.SpawnPiece();
-                showBackground = false;
-            });
+
+            //we can change this but for now the pieces start falling only after start button clicked
+            if (gameStarted)
+            {
+                fallingShapes.Update(gameTime);
+                rhythm.Update(gameTime, () => {
+                    fallingShapes.SpawnPiece();
+                    showBackground = false;
+                });
+            }
+     
 
             base.Update(gameTime);
-
-            fallingShapes.Update(gameTime);
 
             mouseState = Mouse.GetState();
             
 
-            if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton != ButtonState.Pressed)
+            if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton != ButtonState.Pressed && gameStarted)
             {
                 nameOfPieceInBeatBar = "Unicorn_back_left_leg_sat"; // TODO: This needs to be set somewhere to be the name of the piece in the bar.
 
@@ -152,7 +174,11 @@ namespace Rapid_Prototype_1
                 showBackground = true;
             }
 
-            fallingShapes.Draw(spriteBatch);
+            if (started)
+                fallingShapes.Draw(spriteBatch);
+
+            if(!gameStarted)
+                startButton.Draw(spriteBatch);
 
             spriteBatch.End();
 
