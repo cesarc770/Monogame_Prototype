@@ -43,7 +43,7 @@ namespace Rapid_Prototype_1
         // TODO: For instance, "Unicorn_back_left_leg_sat"
         List<string> namesOfPiecesInBeatBar = new List<string>(); 
         GameBoard gameBoard;
-        Shape draggedShape;
+        Shape draggedShape = null;
 
         public Game1()
         {
@@ -151,33 +151,41 @@ namespace Rapid_Prototype_1
             // Mouse down event
             if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton != ButtonState.Pressed && gameStarted)
             {
-                Console.WriteLine("Mouse clicked!");
+                //Console.WriteLine("Mouse clicked!");
                 List<int> indexesOfShapesClicked = ShapeClicker.GetIndexesOfShapesClicked(fallingShapes.GetFallingShapes(), mouseState.X, mouseState.Y);
                 foreach(int index in indexesOfShapesClicked)
                 {
-                    Console.WriteLine("Shape {0} clicked!",fallingShapes.GetFallingShapes()[index].GetName());
+                    //Console.WriteLine("Shape {0} clicked!",fallingShapes.GetFallingShapes()[index].GetName());
+                    draggedShape = fallingShapes.GetFallingShapes()[index]; // This will ultimately result in the top piece being selected
+                }
+                if (draggedShape != null)
+                {
+                    fallingShapes.RemoveShape(draggedShape);
                 }
             }
             else if ((mouseState.LeftButton != ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Pressed && gameStarted))
             {
                 // Mouse up event
                 bool aPieceWasPlaced = false;
-                List<Shape> shapesInBeatBar = fallingShapes.GetShapesInBeatBar(); // TODO: Change this to be the piece being dragged
-                foreach (Shape shape in shapesInBeatBar)
+                 // If this piece was placed
+                if (draggedShape != null && gameBoard.SaturateIfNamePrefixMatch(mouseState.X, mouseState.Y, draggedShape.GetName()))
                 {
-                    // If this piece was placed
-                    if (gameBoard.SaturateIfNamePrefixMatch(mouseState.X, mouseState.Y, shape.GetName()))
-                    {
-                        // TODO: Remove this piece from the list of pieces that can fall
-                        aPieceWasPlaced = true;
-                        fallingShapes.RemoveShape(shape);
-                    }
+                    // TODO: Remove this piece from the list of pieces that can fall
+                    aPieceWasPlaced = true;
                 }
 
                 if (!aPieceWasPlaced)
                 {
                     //TODO: Deduct points for a missed click
                 }
+
+                // Regardless, drop the shape
+                draggedShape = null;
+            }
+
+            if(draggedShape != null)
+            {
+                draggedShape.SetPosition(new Vector2(mouseState.X - draggedShape.GetCenter().X, mouseState.Y - draggedShape.GetCenter().Y));
             }
 
             lastMouseState = mouseState;
@@ -202,15 +210,21 @@ namespace Rapid_Prototype_1
                 showBackground = true;
             }
 
+            gameBoard.Draw(spriteBatch);
+
             if (started)
                 fallingShapes.Draw(spriteBatch);
+
+            if (draggedShape != null)
+            {
+                draggedShape.Draw(spriteBatch);
+            }
 
             if(!gameStarted)
                 startButton.Draw(spriteBatch);
 
             spriteBatch.End();
 
-            gameBoard.Draw(spriteBatch);
 
             base.Draw(gameTime);
         }
