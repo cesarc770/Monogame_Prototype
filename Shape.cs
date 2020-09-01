@@ -17,24 +17,22 @@ namespace Rapid_Prototype_1
         private Vector2 position;
         private float speed;
         private Vector2 center;
+        private Vector2 scale;
         private Texture2D sprite;
         private string assetName;
 
         private Vector2 initialPosition;
 
-        public Shape(Vector2 pos, float speed, string spriteName, ContentManager content) { 
+        public Shape(Vector2 pos, float speed, Vector2 scale, string spriteName, ContentManager content) { 
             position = pos;
             initialPosition = pos;
             this.speed = speed;
+            this.scale = scale;
 
             sprite = content.Load<Texture2D>(spriteName);
             assetName = spriteName;
 
             center = new Vector2(sprite.Width / 2, sprite.Height / 2);
-        }
-
-        private Vector2 Position {
-            get => position - center;
         }
 
         public void Update(GameTime gameTime) {
@@ -43,7 +41,7 @@ namespace Rapid_Prototype_1
         }
 
         public void Draw(SpriteBatch batch) {
-            batch.Draw(sprite, Position, Color.White);
+            batch.Draw(sprite, position, Color.White);
         }
 
         public void ResetPosition()
@@ -63,6 +61,16 @@ namespace Rapid_Prototype_1
         public Vector2 GetPosition()
         {
             return position;
+        }
+
+        public Vector2 GetScale()
+        {
+            return scale;
+        }
+
+        public Texture2D GetSprite()
+        {
+            return sprite;
         }
 
     }

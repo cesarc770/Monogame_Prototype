@@ -29,16 +29,16 @@ namespace Rapid_Prototype_1
 
             float fallSpeed = (FALL_LENGTH * bpm * MINUTES_PER_SECOND) / PIECES_ON_SCREEN;
             // Add one of each piece
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_back_left_leg_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_back_neck_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_back_right_leg_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_body_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_chest_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_front_legs_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_front_neck_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_horn_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_nose_sat", content));
-            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, "Unicorn_tail_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, new Vector2(1,1), "Unicorn_back_left_leg_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, new Vector2(1,1), "Unicorn_back_neck_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, new Vector2(1,1), "Unicorn_back_right_leg_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, new Vector2(1,1), "Unicorn_body_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, new Vector2(1,1), "Unicorn_chest_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, new Vector2(1,1), "Unicorn_front_legs_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, new Vector2(1,1), "Unicorn_front_neck_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, new Vector2(1,1), "Unicorn_horn_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, new Vector2(1,1), "Unicorn_nose_sat", content));
+            allFallingShapes.Add(new Shape(new Vector2(200, 0), fallSpeed, new Vector2(1,1), "Unicorn_tail_sat", content));
         }
 
 
@@ -104,6 +104,11 @@ namespace Rapid_Prototype_1
         {
             allFallingShapes.RemoveAll(item => shape.GetName() == item.GetName());
             fallingShapes.RemoveAll(item => shape.GetName() == item.GetName());
+        }
+
+        public List<Shape> GetFallingShapes()
+        {
+            return fallingShapes;
         }
     }
 }
