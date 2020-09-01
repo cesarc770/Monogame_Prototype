@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Media;
 using Rapid_Prototype_1.Tools;
 using System.Globalization;
 using System.Collections.Generic;
+using System;
 
 namespace Rapid_Prototype_1
 {
@@ -31,7 +32,7 @@ namespace Rapid_Prototype_1
 
         //**************//
 
-        const float TEMP_BPM = 130;
+        const float TEMP_BPM = 130/4.0f;
 
         Rhythm rhythm = new Rhythm(TEMP_BPM);
         Song song;
@@ -42,6 +43,7 @@ namespace Rapid_Prototype_1
         // TODO: For instance, "Unicorn_back_left_leg_sat"
         List<string> namesOfPiecesInBeatBar = new List<string>(); 
         GameBoard gameBoard;
+        Shape draggedShape;
 
         public Game1()
         {
@@ -146,12 +148,22 @@ namespace Rapid_Prototype_1
 
             mouseState = Mouse.GetState();
             
-
+            // Mouse down event
             if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton != ButtonState.Pressed && gameStarted)
             {
+                Console.WriteLine("Mouse clicked!");
+                List<int> indexesOfShapesClicked = ShapeClicker.GetIndexesOfShapesClicked(fallingShapes.GetFallingShapes(), mouseState.X, mouseState.Y);
+                foreach(int index in indexesOfShapesClicked)
+                {
+                    Console.WriteLine("Shape {0} clicked!",fallingShapes.GetFallingShapes()[index].GetName());
+                }
+            }
+            else if ((mouseState.LeftButton != ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Pressed && gameStarted))
+            {
+                // Mouse up event
                 bool aPieceWasPlaced = false;
-                List<Shape> shapesInBeatBar = fallingShapes.GetShapesInBeatBar();
-                foreach(Shape shape in shapesInBeatBar)
+                List<Shape> shapesInBeatBar = fallingShapes.GetShapesInBeatBar(); // TODO: Change this to be the piece being dragged
+                foreach (Shape shape in shapesInBeatBar)
                 {
                     // If this piece was placed
                     if (gameBoard.SaturateIfNamePrefixMatch(mouseState.X, mouseState.Y, shape.GetName()))
@@ -162,7 +174,7 @@ namespace Rapid_Prototype_1
                     }
                 }
 
-                if(!aPieceWasPlaced)
+                if (!aPieceWasPlaced)
                 {
                     //TODO: Deduct points for a missed click
                 }

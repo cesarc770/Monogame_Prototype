@@ -51,6 +51,7 @@
     <Compile Include="Tools\BoardPieceClicker.cs" />
     <Compile Include="Tools\GameBoard.cs" />
     <Compile Include="Tools\Rhythm.cs" />
+    <Compile Include="Tools\ShapeClicker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
