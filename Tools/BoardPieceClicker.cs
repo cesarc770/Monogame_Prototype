@@ -53,7 +53,6 @@ namespace Rapid_Prototype_1.Tools
                 Console.WriteLine("Error! gameBoardTextures and gameBoardPositions must be the same size!");
                 validState = false;
             }
-
             texturesInGameBoard = gameBoardTextures;
             posOfGameBoardPieces = gameBoardPositions;
             scalesOfGameBoardPieces = new List<float>(gameBoardTextures.Count);
