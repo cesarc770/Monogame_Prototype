@@ -63,6 +63,11 @@ namespace Rapid_Prototype_1
             return position;
         }
 
+        public void SetPosition(Vector2 pos)
+        {
+            position = pos;
+        }
+
         public Vector2 GetScale()
         {
             return scale;
