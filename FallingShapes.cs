@@ -36,16 +36,16 @@ namespace Rapid_Prototype_1
         public FallingShapes(ContentManager content) {
 
             // Add one of each piece
-            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_back_left_leg_sat", content));
-            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_back_neck_sat", content));
-            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_back_right_leg_sat", content));
-            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_body_sat", content));
-            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_chest_sat", content));
-            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_front_legs_sat", content));
-            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_front_neck_sat", content));
-            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_horn_sat", content));
-            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_nose_sat", content));
-            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), "Unicorn_tail_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), new Vector2(1,1), "Unicorn_back_left_leg_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), new Vector2(1,1), "Unicorn_back_neck_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), new Vector2(1,1), "Unicorn_back_right_leg_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), new Vector2(1,1), "Unicorn_body_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), new Vector2(1,1), "Unicorn_chest_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), new Vector2(1,1), "Unicorn_front_legs_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), new Vector2(1,1), "Unicorn_front_neck_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), new Vector2(1,1), "Unicorn_horn_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), new Vector2(1,1), "Unicorn_nose_sat", content));
+            allFallingShapes.Add(new Shape(RandomXPos(), RandomFallSpeed(), new Vector2(1,1), "Unicorn_tail_sat", content));
         }
 
         private float RandomFallSpeed() {
@@ -128,6 +128,11 @@ namespace Rapid_Prototype_1
         {
             allFallingShapes.RemoveAll(item => shape.GetName() == item.GetName());
             fallingShapes.RemoveAll(item => shape.GetName() == item.GetName());
+        }
+
+        public List<Shape> GetFallingShapes()
+        {
+            return fallingShapes;
         }
     }
 }

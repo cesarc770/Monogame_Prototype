@@ -121,12 +121,11 @@ namespace Rapid_Prototype_1.Tools
         }
 
         /// <summary>
-        /// To be called from Game1's Draw function. NOTE: This should be called AFTER spriteBatch.End()
+        /// To be called from Game1's Draw function.
         /// </summary>
         /// <param name="spriteBatch">Game1's spriteBatch variable.</param>
         public void Draw(SpriteBatch spriteBatch)
         {
-
             for (int i = 0; i < unsatTextures.Count; i++)
             {
                 if (texturesSaturated[i])
@@ -138,7 +137,6 @@ namespace Rapid_Prototype_1.Tools
                     spriteBatch.Draw(unsatTextures[i], positions[i], null, Color.White, 0, Vector2.Zero, scales[i], SpriteEffects.None, 0f);
                 }
             }
-
         }
 
         /// <summary>
