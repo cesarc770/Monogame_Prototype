@@ -20,6 +20,7 @@ namespace Rapid_Prototype_1
         const int WINDOW_HEIGHT = 1080;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Song song;
 
         Texture2D background_Sprite;
         SpriteFont spriteFont;
@@ -85,7 +86,8 @@ namespace Rapid_Prototype_1
             spriteBatch = new SpriteBatch(GraphicsDevice);
             background_Sprite = Content.Load<Texture2D>("1080 ui no start");
             spriteFont = Content.Load<SpriteFont>("font");
-
+            song = Content.Load<Song>("Chiptronical");
+            MediaPlayer.Play(song);
             startButton = new Button("start", Content)
             {
                 Position = new Vector2(WINDOW_WIDTH - 300 , WINDOW_HEIGHT - 80),
