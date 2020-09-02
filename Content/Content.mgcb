@@ -97,6 +97,13 @@
 /processorParam:TextureFormat=Color
 /build:Eagle5.png
 
+#begin font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:font.spritefont
+
 #begin start.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -22,6 +22,7 @@ namespace Rapid_Prototype_1
         SpriteBatch spriteBatch;
 
         Texture2D background_Sprite;
+        SpriteFont spriteFont;
 
         MouseState mouseState;
         MouseState lastMouseState;
@@ -33,6 +34,7 @@ namespace Rapid_Prototype_1
 
         //**************//
         int piecesPlaced = 0;
+        float timer = 0f;
 
         private bool gameStarted = false;
 
@@ -82,6 +84,7 @@ namespace Rapid_Prototype_1
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             background_Sprite = Content.Load<Texture2D>("1080 ui no start");
+            spriteFont = Content.Load<SpriteFont>("font");
 
             startButton = new Button("start", Content)
             {
@@ -106,6 +109,7 @@ namespace Rapid_Prototype_1
 
         private void StartButton_Click(object sender, System.EventArgs e)
         {
+            timer = 0;
             piecesPlaced = 0;
             gameBoard.ClearBoard();
             gameStarted = true;
@@ -127,6 +131,7 @@ namespace Rapid_Prototype_1
             //we can change this but for now the pieces start falling only after start button clicked
             if (gameStarted && piecesPlaced < gameBoard.boardPieceCount)
             {
+                timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 fallingShapes.Update(gameTime);
             }
             else
@@ -220,9 +225,12 @@ namespace Rapid_Prototype_1
             else
                 startButton.Draw(spriteBatch);
 
-            spriteBatch.End();
+            Vector2 stringPos = timer < 10 ? new Vector2(425, 480) : new Vector2(410, 480);
+            spriteBatch.DrawString(spriteFont, Math.Ceiling(timer).ToString(), stringPos, Color.White, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0);
 
             base.Draw(gameTime);
+
+            spriteBatch.End();
         }
     }
 }
