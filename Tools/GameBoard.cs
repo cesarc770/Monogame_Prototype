@@ -16,6 +16,7 @@ namespace Rapid_Prototype_1.Tools
             Unicorn
         }
 
+        public int boardPieceCount;
         private List<Texture2D> satTextures;
         private List<bool> texturesSaturated;
         private List<Texture2D> unsatTextures;
@@ -92,6 +93,8 @@ namespace Rapid_Prototype_1.Tools
                 positions.Add(rawPositions[7] * scales[7] + textureOffset);
                 positions.Add(rawPositions[8] * scales[8] + textureOffset);
                 positions.Add(rawPositions[9] * scales[9] + textureOffset);
+
+                boardPieceCount = 10;
             }
         }
 
@@ -163,6 +166,15 @@ namespace Rapid_Prototype_1.Tools
             }
 
             return pieceWasPlaced;
+        }
+
+        //clearing the board
+        public void ClearBoard()
+        {
+            for(int i = 0; i < texturesSaturated.Count; i++)
+            {
+                texturesSaturated[i] = false;
+            }
         }
 
     }

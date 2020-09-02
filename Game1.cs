@@ -7,6 +7,7 @@ using Rapid_Prototype_1.Tools;
 using System.Globalization;
 using System.Collections.Generic;
 using System;
+using System.Diagnostics;
 
 namespace Rapid_Prototype_1
 {
@@ -31,6 +32,7 @@ namespace Rapid_Prototype_1
         FallingShapes fallingShapes;
 
         //**************//
+        int piecesPlaced = 0;
 
         private bool gameStarted = false;
 
@@ -104,6 +106,8 @@ namespace Rapid_Prototype_1
 
         private void StartButton_Click(object sender, System.EventArgs e)
         {
+            piecesPlaced = 0;
+            gameBoard.ClearBoard();
             gameStarted = true;
         }
 
@@ -120,12 +124,15 @@ namespace Rapid_Prototype_1
 
             startButton.Update(gameTime);
 
-          
-
             //we can change this but for now the pieces start falling only after start button clicked
-            if (gameStarted)
+            if (gameStarted && piecesPlaced < gameBoard.boardPieceCount)
             {
                 fallingShapes.Update(gameTime);
+            }
+            else
+            {
+                fallingShapes.ClearShapes(Content);
+                gameStarted = false;
             }
      
 
@@ -157,6 +164,8 @@ namespace Rapid_Prototype_1
                 {
                     // TODO: Remove this piece from the list of pieces that can fall
                     aPieceWasPlaced = true;
+                    //increase counter of pieces placed
+                    piecesPlaced++;
                 }
 
                 if (!aPieceWasPlaced)
