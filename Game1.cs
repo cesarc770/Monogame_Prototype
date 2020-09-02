@@ -161,7 +161,10 @@ namespace Rapid_Prototype_1
 
                 if (!aPieceWasPlaced)
                 {
-                    //TODO: Deduct points for a missed click
+                    if(draggedShape != null)
+                    {
+                        fallingShapes.AddShape(draggedShape);
+                    }
                 }
 
                 // Regardless, drop the shape
