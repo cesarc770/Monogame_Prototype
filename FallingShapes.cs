@@ -130,6 +130,11 @@ namespace Rapid_Prototype_1
             fallingShapes.RemoveAll(item => shape.GetName() == item.GetName());
         }
 
+        public void AddShape(Shape shape)
+        {
+            fallingShapes.Add(shape);
+        }
+
         public List<Shape> GetFallingShapes()
         {
             return fallingShapes;
