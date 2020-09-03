@@ -144,6 +144,38 @@ namespace Rapid_Prototype_1.Tools
         }
 
         /// <summary>
+        /// Finds a list of all indexes of nearby piece(s) in the Game Board.
+        /// </summary>
+        /// <param name="mouseGlobalX">The global X position of the mouse.</param>
+        /// <param name="mouseGlobalY">The global Y position of the mouse.</param>
+        /// <param name="centerToCenterDistanceThreshold">The maximum distance between the mouse and the center of the shape.</param>
+        /// <returns>A list of the indexes of each board piece clicked (close enough to the center).
+        /// NOTE: This will be either a list of 0 elements if nothing was clicked on,
+        ///       a list of length 1 if one board piece was clicked on,
+        ///       or a longer list if the images are close enough together.</returns>
+        public List<int> GetIndexesOfPiecesClicked(int mouseGlobalX, int mouseGlobalY, float centerToCenterDistanceThreshold)
+        {
+            List<int> indexesClicked = new List<int>();
+
+            if (validState == false)
+            {
+                Console.WriteLine("This BoardPieceClicker is in an invalid state. Please generate a new BoardPieceClicker.");
+                return indexesClicked;
+            }
+
+            for (int i = 0; i < texturesInGameBoard.Count; i++)
+            {
+                if (ClickedNearCenterOfTexture(texturesInGameBoard[i], posOfGameBoardPieces[i], scalesOfGameBoardPieces[i], mouseGlobalX, mouseGlobalY, centerToCenterDistanceThreshold))
+                {
+                    indexesClicked.Add(i);
+                }
+            }
+
+            return indexesClicked;
+        }
+
+
+        /// <summary>
         /// Gets the pixel coordinates of the click in the texture's local space and scale.
         /// </summary>
         /// <param name="tex">The Texture2D to check.</param>
@@ -219,6 +251,31 @@ namespace Rapid_Prototype_1.Tools
             }
 
             return clickedOnNonAlphaInTexture;
+        }
+
+        /// <summary>
+        /// Checks to see if the mouse click was close enough to the center of the texture.
+        /// </summary>
+        /// <param name="tex">The texture to check.</param>
+        /// <param name="texPos">The global position of the texture to check.</param>
+        /// <param name="texScale">The scale of the texture to check.</param>
+        /// <param name="mouseGlobalX">The global X position of the mouse.</param>
+        /// <param name="mouseGlobalY">The global Y position of the mouse.</param>
+        /// <param name="centerToCenterDistanceThreshold">The maximum distance between the mouse and the center of the shape.</param>
+        /// <returns>True if the pixel was close enough to the center of the texture,
+        /// or false if the pixel was too far from the center.</returns>
+        private bool ClickedNearCenterOfTexture(Texture2D tex, Vector2 texPos, float texScale, int mouseGlobalX, int mouseGlobalY, float centerToCenterDistanceThreshold)
+        {
+            bool clickedNearCenterOfTexture = false;
+
+            Vector2 centerInGlobal = new Vector2(texPos.X + tex.Width * texScale / 2.0f, texPos.Y + tex.Height * texScale / 2.0f);
+
+            if(Vector2.Distance(new Vector2(mouseGlobalX, mouseGlobalY), centerInGlobal) <= centerToCenterDistanceThreshold)
+            {
+                clickedNearCenterOfTexture = true;
+            }
+
+            return clickedNearCenterOfTexture;
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Rapid_Prototype_1
     {
         const int WINDOW_WIDTH = 1920;
         const int WINDOW_HEIGHT = 1080;
+        const float THRESHOLD_FOR_PLACING_PIECES = 100.0f;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Song song;
@@ -39,9 +40,6 @@ namespace Rapid_Prototype_1
 
         private bool gameStarted = false;
 
-        // TODO: This needs to be the names of the assets used to create the pieces that are in the beat bar
-        // TODO: For instance, "Unicorn_back_left_leg_sat"
-        List<string> namesOfPiecesInBeatBar = new List<string>(); 
         GameBoard gameBoard;
         Shape draggedShape = null;
 
@@ -166,7 +164,7 @@ namespace Rapid_Prototype_1
                 // Mouse up event
                 bool aPieceWasPlaced = false;
                  // If this piece was placed
-                if (draggedShape != null && gameBoard.SaturateIfNamePrefixMatch(mouseState.X, mouseState.Y, draggedShape.GetName()))
+                if (draggedShape != null && gameBoard.SaturateIfNamePrefixMatch(mouseState.X, mouseState.Y, draggedShape.GetName(), THRESHOLD_FOR_PLACING_PIECES))
                 {
                     // TODO: Remove this piece from the list of pieces that can fall
                     aPieceWasPlaced = true;
