@@ -112,6 +112,7 @@
     </None>
     <None Include="app.manifest" />
     <None Include="Content\1080 ui no start.xnb" />
+    <None Include="Content\Chiptronical.xnb" />
     <None Include="Content\start.xnb" />
     <None Include="Content\tempLoop.xnb" />
     <None Include="Content\Unicorn_back_left_leg_sat.xnb" />

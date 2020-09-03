@@ -7,6 +7,7 @@ using Rapid_Prototype_1.Tools;
 using System.Globalization;
 using System.Collections.Generic;
 using System;
+using System.Diagnostics;
 
 namespace Rapid_Prototype_1
 {
@@ -19,8 +20,10 @@ namespace Rapid_Prototype_1
         const int WINDOW_HEIGHT = 1080;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Song song;
 
         Texture2D background_Sprite;
+        SpriteFont spriteFont;
 
         MouseState mouseState;
         MouseState lastMouseState;
@@ -31,6 +34,8 @@ namespace Rapid_Prototype_1
         FallingShapes fallingShapes;
 
         //**************//
+        int piecesPlaced = 0;
+        float timer = 0f;
 
         private bool gameStarted = false;
 
@@ -80,7 +85,9 @@ namespace Rapid_Prototype_1
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             background_Sprite = Content.Load<Texture2D>("1080 ui no start");
-
+            spriteFont = Content.Load<SpriteFont>("font");
+            song = Content.Load<Song>("Chiptronical");
+            MediaPlayer.Play(song);
             startButton = new Button("start", Content)
             {
                 Position = new Vector2(WINDOW_WIDTH - 300 , WINDOW_HEIGHT - 80),
@@ -104,6 +111,9 @@ namespace Rapid_Prototype_1
 
         private void StartButton_Click(object sender, System.EventArgs e)
         {
+            timer = 0;
+            piecesPlaced = 0;
+            gameBoard.ClearBoard();
             gameStarted = true;
         }
 
@@ -120,12 +130,16 @@ namespace Rapid_Prototype_1
 
             startButton.Update(gameTime);
 
-          
-
             //we can change this but for now the pieces start falling only after start button clicked
-            if (gameStarted)
+            if (gameStarted && piecesPlaced < gameBoard.boardPieceCount)
             {
+                timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 fallingShapes.Update(gameTime);
+            }
+            else
+            {
+                fallingShapes.ClearShapes(Content);
+                gameStarted = false;
             }
      
 
@@ -157,6 +171,8 @@ namespace Rapid_Prototype_1
                 {
                     // TODO: Remove this piece from the list of pieces that can fall
                     aPieceWasPlaced = true;
+                    //increase counter of pieces placed
+                    piecesPlaced++;
                 }
 
                 if (!aPieceWasPlaced)
@@ -211,9 +227,12 @@ namespace Rapid_Prototype_1
             else
                 startButton.Draw(spriteBatch);
 
-            spriteBatch.End();
+            Vector2 stringPos = timer < 10 ? new Vector2(425, 480) : new Vector2(410, 480);
+            spriteBatch.DrawString(spriteFont, Math.Ceiling(timer).ToString(), stringPos, Color.White, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0);
 
             base.Draw(gameTime);
+
+            spriteBatch.End();
         }
     }
 }
