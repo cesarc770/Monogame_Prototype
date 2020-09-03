@@ -154,7 +154,6 @@ namespace Rapid_Prototype_1
                 List<int> indexesOfShapesClicked = ShapeClicker.GetIndexesOfShapesClicked(fallingShapes.GetFallingShapes(), mouseState.X, mouseState.Y);
                 foreach(int index in indexesOfShapesClicked)
                 {
-                    //Console.WriteLine("Shape {0} clicked!",fallingShapes.GetFallingShapes()[index].GetName());
                     draggedShape = fallingShapes.GetFallingShapes()[index]; // This will ultimately result in the top piece being selected
                 }
                 if (draggedShape != null)
@@ -230,9 +229,9 @@ namespace Rapid_Prototype_1
             Vector2 stringPos = timer < 10 ? new Vector2(425, 480) : new Vector2(410, 480);
             spriteBatch.DrawString(spriteFont, Math.Ceiling(timer).ToString(), stringPos, Color.White, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0);
 
+            spriteBatch.End();
             base.Draw(gameTime);
 
-            spriteBatch.End();
         }
     }
 }
