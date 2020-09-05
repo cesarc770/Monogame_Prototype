@@ -143,7 +143,7 @@ namespace Rapid_Prototype_1.Tools
         }
 
         /// <summary>
-        /// Saturates the piece clicked if its name prefix starts the given name passed in.
+        /// Saturates the piece clicked (on pixel) if its name prefix starts the given name passed in.
         /// </summary>
         /// <param name="globalMouseX">The global X position of the mouse.</param>
         /// <param name="globalMouseY">The global Y position of the mouse.</param>
@@ -155,6 +155,32 @@ namespace Rapid_Prototype_1.Tools
 
             // There shouldn't be any overlapping pieces, but let's account for that anyway
             List<int> indexes = pieceClickChecker.GetIndexesOfPiecesClicked(globalMouseX, globalMouseY);
+
+            foreach (int index in indexes)
+            {
+                if (name.StartsWith(namePrefixes[index]))
+                {
+                    texturesSaturated[index] = true;
+                    pieceWasPlaced = true;
+                }
+            }
+
+            return pieceWasPlaced;
+        }
+
+        /// <summary>
+        /// Saturates the piece clicked (near center) if its name prefix starts the given name passed in.
+        /// </summary>
+        /// <param name="globalMouseX">The global X position of the mouse.</param>
+        /// <param name="globalMouseY">The global Y position of the mouse.</param>
+        /// <param name="name">The asset name used to initialize the piece inside the beat bar.</param>
+        /// <param name="centerToCenterDistanceThreshold">The maximum distance between the mouse and the center of the shape.</param>
+        /// <returns>True if a piece was placed, false if no piece was placed</returns>
+        public bool SaturateIfNamePrefixMatch(int globalMouseX, int globalMouseY, string name, float centerToCenterDistanceThreshold)
+        {
+            bool pieceWasPlaced = false;
+
+            List<int> indexes = pieceClickChecker.GetIndexesOfPiecesClicked(globalMouseX, globalMouseY, centerToCenterDistanceThreshold);
 
             foreach (int index in indexes)
             {
