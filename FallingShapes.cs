@@ -17,11 +17,8 @@ namespace Rapid_Prototype_1
         private List<Shape> fallingShapes = new List<Shape>();
         private List<Shape> allFallingShapes = new List<Shape>();
 
-        private List<Shape> shapesInBeatBar = new List<Shape>(); // This will almost always have 0 or 1 entries, more if we add more lanes
-
         const int SCREEN_HEIGHT = 1080;
         const int FALL_LENGTH = 816;
-        const int BEAT_BAR_SIZE = 114;
         const int MIN_SPEED = 300;
         const int MAX_SPEED = 500;
         const int MIN_X = 100;
@@ -49,8 +46,6 @@ namespace Rapid_Prototype_1
             return random.Next(MIN_X, MAX_X);
         }
 
-
-
         private void SpawnPiece() {
             if (allFallingShapes.Count != 0) {
                 fallingShapes.Add(allFallingShapes[0]);
@@ -71,23 +66,7 @@ namespace Rapid_Prototype_1
             foreach (Shape shape in fallingShapes) {
                 shape.Update(gameTime);
                 float shapeTop = shape.GetPosition().Y - shape.GetCenter().Y;
-                float shapeBottom = shape.GetPosition().Y + shape.GetCenter().Y;
-                // If any part of the shape is in the shape bar
-                if (shapeTop <= FALL_LENGTH + BEAT_BAR_SIZE/2 &&
-                    shapeBottom >= FALL_LENGTH -BEAT_BAR_SIZE/2)
-                {
-                    // If this shape is not already counted as in the beat bar
-                    if(!shapesInBeatBar.Contains(shape))
-                    {
-                        // Add it to the list of shapes in the beat bar
-                        shapesInBeatBar.Add(shape);
-                    }
-                }
-                // If no part of the shape is in the beat bar and it is still counted as in the beat bar
-                if(shapeTop >= FALL_LENGTH + BEAT_BAR_SIZE/2 && shapesInBeatBar.Contains(shape))
-                {
-                    shapesInBeatBar.Remove(shape);
-                }
+                float shapeBottom = shape.GetPosition().Y + shape.GetCenter().Y; // Leaving this in for when we have pieces "shatter" on the bottom
                 
                 // If a piece is all the way off screen
                 if (shapeTop >= SCREEN_HEIGHT)
@@ -112,11 +91,6 @@ namespace Rapid_Prototype_1
             }
         }
 
-        public List<Shape> GetShapesInBeatBar()
-        {
-            return shapesInBeatBar;
-        }
-
         public void RemoveShape(Shape shape)
         {
             allFallingShapes.RemoveAll(item => shape.GetName() == item.GetName());
@@ -131,6 +105,7 @@ namespace Rapid_Prototype_1
         public void ClearShapes(ContentManager content)
         {
             fallingShapes.Clear();
+            allFallingShapes.Clear();
             AddAllFallingShapes(content);
         }
 
