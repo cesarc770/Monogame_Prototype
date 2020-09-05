@@ -133,6 +133,7 @@ namespace Rapid_Prototype_1
             {
                 timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 fallingShapes.Update(gameTime);
+                fallingShapes.UpdateShatteredShapes(gameTime, Content);
             }
             else
             {
@@ -201,7 +202,7 @@ namespace Rapid_Prototype_1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
             if (showBackground) {
                 spriteBatch.Draw(background_Sprite, GraphicsDevice.Viewport.Bounds, Color.White);

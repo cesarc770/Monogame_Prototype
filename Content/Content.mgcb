@@ -140,6 +140,18 @@
 /processorParam:TextureFormat=Color
 /build:Unicorn_back_left_leg_sat.png
 
+#begin Unicorn_back_left_leg_sat_shattered.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Unicorn_back_left_leg_sat_shattered.png
+
 #begin Unicorn_back_left_leg_unsat.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -163,6 +175,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Unicorn_back_neck_sat.png
+
+#begin Unicorn_back_neck_sat_shattered.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Unicorn_back_neck_sat_shattered.png
 
 #begin Unicorn_back_neck_unsat.png
 /importer:TextureImporter
@@ -188,6 +212,18 @@
 /processorParam:TextureFormat=Color
 /build:Unicorn_back_right_leg_sat.png
 
+#begin Unicorn_back_right_leg_sat_shattered.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Unicorn_back_right_leg_sat_shattered.png
+
 #begin Unicorn_back_right_leg_unsat.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -211,6 +247,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Unicorn_body_sat.png
+
+#begin Unicorn_body_sat_shattered.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Unicorn_body_sat_shattered.png
 
 #begin Unicorn_body_unsat.png
 /importer:TextureImporter
@@ -236,6 +284,18 @@
 /processorParam:TextureFormat=Color
 /build:Unicorn_chest_sat.png
 
+#begin Unicorn_chest_sat_shattered.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Unicorn_chest_sat_shattered.png
+
 #begin Unicorn_chest_unsat.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -259,6 +319,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Unicorn_front_legs_sat.png
+
+#begin Unicorn_front_legs_sat_shattered.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Unicorn_front_legs_sat_shattered.png
 
 #begin Unicorn_front_legs_unsat.png
 /importer:TextureImporter
@@ -284,6 +356,18 @@
 /processorParam:TextureFormat=Color
 /build:Unicorn_front_neck_sat.png
 
+#begin Unicorn_front_neck_sat_shattered.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Unicorn_front_neck_sat_shattered.png
+
 #begin Unicorn_front_neck_unsat.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -307,6 +391,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Unicorn_horn_sat.png
+
+#begin Unicorn_horn_sat_shattered.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Unicorn_horn_sat_shattered.png
 
 #begin Unicorn_horn_unsat.png
 /importer:TextureImporter
@@ -332,6 +428,18 @@
 /processorParam:TextureFormat=Color
 /build:Unicorn_nose_sat.png
 
+#begin Unicorn_nose_sat_shattered.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Unicorn_nose_sat_shattered.png
+
 #begin Unicorn_nose_unsat.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -355,6 +463,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Unicorn_tail_sat.png
+
+#begin Unicorn_tail_sat_shattered.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Unicorn_tail_sat_shattered.png
 
 #begin Unicorn_tail_unsat.png
 /importer:TextureImporter

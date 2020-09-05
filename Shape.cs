@@ -48,6 +48,12 @@ namespace Rapid_Prototype_1
         {
             position = initialPosition;
         }
+
+        public void ResetPosition(float x, float y)
+        {
+            position = new Vector2(x, y);
+        }
+
         public Vector2 GetCenter()
         {
             return center;
