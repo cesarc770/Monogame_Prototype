@@ -32,7 +32,7 @@ namespace Rapid_Prototype_1
             sprite = content.Load<Texture2D>(spriteName);
             assetName = spriteName;
 
-            center = new Vector2(sprite.Width / 2, sprite.Height / 2);
+            center = new Vector2(sprite.Width * scale.X / 2, sprite.Height * scale.Y / 2);
         }
 
         public void Update(GameTime gameTime) {
@@ -41,7 +41,7 @@ namespace Rapid_Prototype_1
         }
 
         public void Draw(SpriteBatch batch) {
-            batch.Draw(sprite, position, Color.White);
+            batch.Draw(sprite, position, null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
 
         public void ResetPosition()
