@@ -12,7 +12,10 @@ namespace Rapid_Prototype_1.Tools
 
     class ShatterManager
     {
-        const float LIFETIME_IN_MS = 1000.0f;
+
+        public const float SHATTER_HEIGHT = 990.0f;
+
+        private const float LIFETIME_IN_MS = 1000.0f;
 
         private List<ShatteredPiece> shatteredPieces = new List<ShatteredPiece>();
         private List<ShatteredPiece> deadPieces = new List<ShatteredPiece>();

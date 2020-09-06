@@ -21,21 +21,14 @@ namespace Rapid_Prototype_1.Tools
         private Vector2 scale;
         private float alpha = 0f;
 
-        public ShatteredPiece(Shape originalShape, Vector2 pos, double bTime, double lifeSpan, string assetName, Vector2 spriteScale, ContentManager content)
+        public ShatteredPiece(Shape originalShape, Vector2 pos, double bTime, double lifeSpan, string assetName, Vector2 assetScale, ContentManager content)
         {
             shape = originalShape;
             position = pos;
             birthTime = bTime;
             lifeSpanInMS = lifeSpan;
-            if(!assetName.StartsWith("Unicorn"))
-            {
-                // TODO: Something other than shatter? Maybe poof?
-            }
-            else
-            {
-                asset = content.Load<Texture2D>(assetName);
-            }
-            scale = spriteScale;
+            asset = content.Load<Texture2D>(assetName);
+            scale = assetScale;
         }
 
         public void Update(GameTime gameTime)

@@ -75,7 +75,7 @@ namespace Rapid_Prototype_1
                 float shapeBottom = shape.GetPosition().Y + shape.GetCenter().Y*2; // Leaving this in for when we have pieces "shatter" on the bottom
                 
                 // If a piece is all the way off screen
-                if (shapeBottom >= SCREEN_HEIGHT)
+                if (shapeBottom >= ShatterManager.SHATTER_HEIGHT)
                 {
                     shapesToShatter.Add(shape);
                 }
