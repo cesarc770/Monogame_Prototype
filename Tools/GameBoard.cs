@@ -17,6 +17,7 @@ namespace Rapid_Prototype_1.Tools
         }
 
         public int boardPieceCount;
+        public Texture2D finishedTexture;
         private List<Texture2D> satTextures;
         private List<bool> texturesSaturated;
         private List<Texture2D> unsatTextures;
@@ -46,7 +47,8 @@ namespace Rapid_Prototype_1.Tools
             scales = new List<float>();
             namePrefixes = new List<string>();
 
-            textureOffset = new Vector2(900, 100);
+            //to change the position of horse change offset
+            textureOffset = new Vector2(650, 100);
         }
 
         /// <summary>
@@ -106,6 +108,8 @@ namespace Rapid_Prototype_1.Tools
         {
             if (boardName == BoardName.Unicorn)
             {
+                finishedTexture = Content.Load<Texture2D>("finished unicorn");
+
                 foreach (string namePrefix in namePrefixes)
                 {
                     Texture2D unsatTex = Content.Load<Texture2D>(namePrefix + "unsat");
@@ -127,17 +131,24 @@ namespace Rapid_Prototype_1.Tools
         /// To be called from Game1's Draw function.
         /// </summary>
         /// <param name="spriteBatch">Game1's spriteBatch variable.</param>
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, bool gameWon)
         {
-            for (int i = 0; i < unsatTextures.Count; i++)
+            if (gameWon)
             {
-                if (texturesSaturated[i])
+                spriteBatch.Draw(finishedTexture, textureOffset, null, Color.White, 0, Vector2.Zero, 1.2f, SpriteEffects.None, 0f);
+            }
+            else
+            {
+                for (int i = 0; i < unsatTextures.Count; i++)
                 {
-                    spriteBatch.Draw(satTextures[i], positions[i], null, Color.White, 0, Vector2.Zero, scales[i], SpriteEffects.None, 0f);
-                }
-                else
-                {
-                    spriteBatch.Draw(unsatTextures[i], positions[i], null, Color.White, 0, Vector2.Zero, scales[i], SpriteEffects.None, 0f);
+                    if (texturesSaturated[i])
+                    {
+                        spriteBatch.Draw(satTextures[i], positions[i], null, Color.White, 0, Vector2.Zero, scales[i], SpriteEffects.None, 0f);
+                    }
+                    else
+                    {
+                        spriteBatch.Draw(unsatTextures[i], positions[i], null, Color.White, 0, Vector2.Zero, scales[i], SpriteEffects.None, 0f);
+                    }
                 }
             }
         }
