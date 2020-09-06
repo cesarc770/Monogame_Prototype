@@ -39,6 +39,7 @@ namespace Rapid_Prototype_1
         float timer = 0f;
 
         private bool gameStarted = false;
+        private bool gameWon = false;
 
         GameBoard gameBoard;
         Shape draggedShape = null;
@@ -111,6 +112,7 @@ namespace Rapid_Prototype_1
         {
             timer = 0;
             piecesPlaced = 0;
+            gameWon = false;
             gameBoard.ClearBoard();
             gameStarted = true;
         }
@@ -137,6 +139,10 @@ namespace Rapid_Prototype_1
             }
             else
             {
+                if(piecesPlaced == gameBoard.boardPieceCount)
+                {
+                    gameWon = true;
+                }
                 fallingShapes.ClearShapes(Content);
                 gameStarted = false;
             }
@@ -212,7 +218,7 @@ namespace Rapid_Prototype_1
                 showBackground = true;
             }
 
-            gameBoard.Draw(spriteBatch);
+            gameBoard.Draw(spriteBatch, gameWon);
 
             if (gameStarted)
             {
@@ -225,8 +231,8 @@ namespace Rapid_Prototype_1
             else
                 startButton.Draw(spriteBatch);
 
-            Vector2 stringPos = timer < 10 ? new Vector2(425, 480) : new Vector2(410, 480);
-            spriteBatch.DrawString(spriteFont, Math.Ceiling(timer).ToString(), stringPos, Color.White, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0);
+            Vector2 stringPos = timer < 10 ? new Vector2(WINDOW_WIDTH - 180 , 35 ) : new Vector2(WINDOW_WIDTH - 200, 35);
+            spriteBatch.DrawString(spriteFont, Math.Ceiling(timer).ToString(), stringPos, Color.White, 0f, Vector2.Zero, 2.5f, SpriteEffects.None, 0);
 
             spriteBatch.End();
             base.Draw(gameTime);
