@@ -52,6 +52,8 @@
     <Compile Include="Tools\GameBoard.cs" />
     <Compile Include="Tools\Rhythm.cs" />
     <Compile Include="Tools\ShapeClicker.cs" />
+    <Compile Include="Tools\ShatteredPiece.cs" />
+    <Compile Include="Tools\ShatterManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

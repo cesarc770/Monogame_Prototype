@@ -82,7 +82,7 @@ namespace Rapid_Prototype_1
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            background_Sprite = Content.Load<Texture2D>("1080 ui no start");
+            background_Sprite = Content.Load<Texture2D>("v2_ui");
             spriteFont = Content.Load<SpriteFont>("font");
             song = Content.Load<Song>("Chiptronical");
             MediaPlayer.Play(song);
@@ -133,6 +133,7 @@ namespace Rapid_Prototype_1
             {
                 timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 fallingShapes.Update(gameTime);
+                fallingShapes.UpdateShatteredShapes(gameTime, Content);
             }
             else
             {
@@ -201,7 +202,7 @@ namespace Rapid_Prototype_1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
             if (showBackground) {
                 spriteBatch.Draw(background_Sprite, GraphicsDevice.Viewport.Bounds, Color.White);

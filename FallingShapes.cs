@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Rapid_Prototype_1.Tools;
 
 namespace Rapid_Prototype_1
 {
@@ -16,6 +17,9 @@ namespace Rapid_Prototype_1
     {
         private List<Shape> fallingShapes = new List<Shape>();
         private List<Shape> allFallingShapes = new List<Shape>();
+        private List<Shape> shapesToShatter = new List<Shape>();
+
+        private ShatterManager shatterManager = new ShatterManager();
 
         const int SCREEN_HEIGHT = 1080;
         const int FALL_LENGTH = 816;
@@ -63,33 +67,63 @@ namespace Rapid_Prototype_1
                 SpawnPiece();
                 nextSpawnTime = gameTime.TotalGameTime.TotalMilliseconds + GetNextSpawnOffset();
             }
+
             List<Shape> shapesToWrap = new List<Shape>();
             foreach (Shape shape in fallingShapes) {
                 shape.Update(gameTime);
                 float shapeTop = shape.GetPosition().Y - shape.GetCenter().Y;
-                float shapeBottom = shape.GetPosition().Y + shape.GetCenter().Y; // Leaving this in for when we have pieces "shatter" on the bottom
+                float shapeBottom = shape.GetPosition().Y + shape.GetCenter().Y*2; // Leaving this in for when we have pieces "shatter" on the bottom
                 
                 // If a piece is all the way off screen
-                if (shapeTop >= SCREEN_HEIGHT)
+                if (shapeBottom >= ShatterManager.SHATTER_HEIGHT)
                 {
-                    shapesToWrap.Add(shape);
+                    shapesToShatter.Add(shape);
                 }
             }
-            // This will almost always have 0 or 1 entry; if we add multiple lanes later, this could have more
-            foreach (Shape shape in shapesToWrap)
+
+            // Stop shattered pieces from falling
+            foreach(Shape shape in shapesToShatter)
             {
                 fallingShapes.Remove(shape);
-                // Comment these to stop the pieces from wrapping
-                shape.ResetPosition();
-                allFallingShapes.Add(shape); 
             }
-            shapesToWrap.Clear();
+
+            //// This will almost always have 0 or 1 entry; if we add multiple lanes later, this could have more
+            //foreach (Shape shape in shapesToWrap)
+            //{
+            //    fallingShapes.Remove(shape);
+            //    // Comment these to stop the pieces from wrapping
+            //    shape.ResetPosition();
+            //    allFallingShapes.Add(shape); 
+            //}
+            //shapesToWrap.Clear();
+        }
+
+        public void UpdateShatteredShapes(GameTime gameTime, ContentManager content)
+        {
+            shatterManager.Update(gameTime);
+
+            foreach (Shape shape in shapesToShatter)
+            {
+                shatterManager.AddPiece(shape, gameTime, content);
+            }
+            shapesToShatter.Clear();
+
+            List<Shape> shapesToResurrect = shatterManager.GetShapesToResurrect();
+
+            // Handle wrapping
+            foreach(Shape shape in shapesToResurrect)
+            {
+                shape.ResetPosition(RandomXPos(), 0);
+                allFallingShapes.Add(shape);
+            }
+            shapesToResurrect.Clear();
         }
 
         public void Draw(SpriteBatch batch) {
             foreach (Shape shape in fallingShapes) {
                 shape.Draw(batch);
             }
+            shatterManager.Draw(batch);
         }
 
         public void RemoveShape(Shape shape)
