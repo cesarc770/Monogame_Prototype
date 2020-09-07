@@ -89,7 +89,7 @@ namespace Rapid_Prototype_1
             MediaPlayer.Play(song);
             startButton = new Button("start", Content)
             {
-                Position = new Vector2(WINDOW_WIDTH - 300 , WINDOW_HEIGHT - 80),
+                Position = new Vector2(WINDOW_WIDTH - 320 , WINDOW_HEIGHT - 120),
             };
 
             startButton.Click += StartButton_Click;
