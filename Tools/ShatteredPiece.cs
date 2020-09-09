@@ -28,6 +28,7 @@ namespace Rapid_Prototype_1.Tools
             birthTime = bTime;
             lifeSpanInMS = lifeSpan;
             asset = content.Load<Texture2D>(assetName);
+            SwapAssetToColor(Color.Red);
             scale = assetScale;
         }
 
@@ -47,13 +48,30 @@ namespace Rapid_Prototype_1.Tools
         {
             if(!isDead && asset != null)
             {
-                batch.Draw(asset, position, null, new Color(255f,0f,0f)*alpha, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                batch.Draw(asset, position, null, Color.White*alpha, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
             }
         }
 
         public Shape GetShape()
         {
             return shape;
+        }
+
+        private void SwapAssetToColor(Color color)
+        {
+            Color[] colors = new Color[asset.Width * asset.Height];
+
+            asset.GetData(colors);
+
+            for(int i = 0; i < asset.Width*asset.Height; i++)
+            {
+                if(colors[i].A > 128)
+                {
+                    colors[i] = color;
+                }
+            }
+
+            asset.SetData(colors);
         }
     }
 }
