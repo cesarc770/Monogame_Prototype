@@ -20,8 +20,14 @@ namespace Rapid_Prototype_1
         const int WINDOW_HEIGHT = 1080;
         const float THRESHOLD_FOR_PLACING_PIECES = 100.0f;
         GraphicsDeviceManager graphics;
+        private PresentationParameters pp;
         SpriteBatch spriteBatch;
         Song song;
+
+        private RenderTarget2D renderTarget1, renderTarget2;
+
+        Flickering flickering;
+        float bloomSatPulse = 1f, bloomSatDir = .04f;
 
         Texture2D background_Sprite;
         SpriteFont spriteFont;
@@ -70,6 +76,17 @@ namespace Rapid_Prototype_1
             gameBoard = new GameBoard(GameBoard.BoardName.Unicorn);
             gameBoard.Initialize();
 
+            pp = GraphicsDevice.PresentationParameters;
+
+            renderTarget1 = new RenderTarget2D(GraphicsDevice, 
+                pp.BackBufferWidth, pp.BackBufferHeight, 
+                false, pp.BackBufferFormat, pp.DepthStencilFormat, 
+                pp.MultiSampleCount, RenderTargetUsage.DiscardContents);
+            renderTarget2 = new RenderTarget2D(GraphicsDevice,
+                pp.BackBufferWidth, pp.BackBufferHeight,
+                false, pp.BackBufferFormat, pp.DepthStencilFormat,
+                pp.MultiSampleCount, RenderTargetUsage.DiscardContents);
+
             lastMouseState = Mouse.GetState();
 
             base.Initialize();
@@ -83,6 +100,7 @@ namespace Rapid_Prototype_1
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            flickering = new Flickering(GraphicsDevice, spriteBatch);
             background_Sprite = Content.Load<Texture2D>("v2_ui");
             spriteFont = Content.Load<SpriteFont>("font");
             song = Content.Load<Song>("Chiptronical");
@@ -95,6 +113,8 @@ namespace Rapid_Prototype_1
             startButton.Click += StartButton_Click;
 
             fallingShapes = new FallingShapes(Content);
+
+            flickering.LoadContent(Content, pp);
 
             gameBoard.LoadContent(Content);
         }
@@ -136,12 +156,14 @@ namespace Rapid_Prototype_1
                 timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 fallingShapes.Update(gameTime);
                 fallingShapes.UpdateShatteredShapes(gameTime, Content);
+                flickering.Settings = FlickeringSettings.PresetSettings[0];
             }
             else
             {
                 if(piecesPlaced == gameBoard.boardPieceCount)
                 {
                     gameWon = true;
+                    flickering.Settings = FlickeringSettings.PresetSettings[0];
                 }
                 fallingShapes.ClearShapes(Content);
                 gameStarted = false;
@@ -198,6 +220,11 @@ namespace Rapid_Prototype_1
 
             lastMouseState = mouseState;
 
+            bloomSatPulse += bloomSatDir;
+            if (bloomSatPulse > 2.5f) bloomSatDir = -0.04f;
+            if (bloomSatPulse < 0.1f) bloomSatDir = 0.04f;
+            flickering.Settings.BloomSaturation = bloomSatPulse;
+
         }
 
         /// <summary>
@@ -207,6 +234,24 @@ namespace Rapid_Prototype_1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            if(gameWon)
+            {
+                GraphicsDevice.SetRenderTarget(renderTarget1);
+                GraphicsDevice.Clear(Color.TransparentBlack);
+                spriteBatch.Begin();
+                gameBoard.Draw(spriteBatch, gameWon);
+                spriteBatch.End();
+                flickering.Draw(renderTarget1, renderTarget2);
+                GraphicsDevice.SetRenderTarget(null);
+            }
+            else
+            {
+                GraphicsDevice.SetRenderTarget(renderTarget1);
+                GraphicsDevice.Clear(Color.TransparentBlack);
+                flickering.Draw(renderTarget1, renderTarget2);
+                GraphicsDevice.SetRenderTarget(null);
+            }
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
@@ -218,7 +263,10 @@ namespace Rapid_Prototype_1
                 showBackground = true;
             }
 
-            gameBoard.Draw(spriteBatch, gameWon);
+            if(!gameWon)
+            {
+                gameBoard.Draw(spriteBatch, gameWon);
+            }
 
             if (gameStarted)
             {
@@ -234,6 +282,10 @@ namespace Rapid_Prototype_1
             Vector2 stringPos = timer < 10 ? new Vector2(WINDOW_WIDTH - 180 , 35 ) : new Vector2(WINDOW_WIDTH - 200, 35);
             spriteBatch.DrawString(spriteFont, Math.Ceiling(timer).ToString(), stringPos, Color.White, 0f, Vector2.Zero, 2.5f, SpriteEffects.None, 0);
 
+            spriteBatch.End();
+
+            spriteBatch.Begin(0, BlendState.AlphaBlend);
+            spriteBatch.Draw(renderTarget2, new Rectangle(0, 0, pp.BackBufferWidth, pp.BackBufferHeight), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
 
