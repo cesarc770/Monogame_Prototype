@@ -182,6 +182,24 @@
 /processorParam:TextureFormat=Compressed
 /build:font.spritefont
 
+#begin SHADER/FlickeringCombine.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:SHADER/FlickeringCombine.fx
+
+#begin SHADER/FlickeringExtract.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:SHADER/FlickeringExtract.fx
+
+#begin SHADER/GaussianBlur.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:SHADER/GaussianBlur.fx
+
 #begin start.png
 /importer:TextureImporter
 /processor:TextureProcessor
