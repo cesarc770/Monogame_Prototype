@@ -1,6 +1,6 @@
 # Glass
 
-Glass is an unrgent pattern filler style game in which pieces of a whole glass figure fall as you drag and drop them in the correct slots in the board to build the final glass figure.
+Glass is an urgent pattern filler style game in which pieces of a whole glass figure fall as you drag and drop them in the correct slots in the board to build the final glass figure.
 Built with MonoGame
 
 ## Getting Started
